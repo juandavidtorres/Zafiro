@@ -1,0 +1,35 @@
+﻿
+
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutPageLogin.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="login">
+        <div class="login-screen">
+            <div class="app-title">
+                <h1>Iniciar sesión</h1>
+            </div>           
+            <div class="login-form">
+                <div class="control-group">
+                    @*<input type="text" class="login-field" value="" placeholder="usuario" id="Email">*@
+                    @Html.TextBox("Email", null, new { @class = "login-field", @placeholder = "email",@Id="Email" })
+                    <label class="login-field-icon fui-user" for="Email"></label>
+                </div>
+
+                <div class="control-group">
+                    @*<input type="password" class="login-field" value="" placeholder="password" id="Password">*@
+                    @Html.Password("Password", null, new { @class = "login-field", @placeholder = "Password", @Id = "password" })
+                    <label class="login-field-icon fui-lock" for="password"></label>
+                </div>
+                              
+                <input type="submit" value="Iniciar sesión" class="btn btn-primary btn-large btn-block" />                
+            </div>
+        </div>
+    </div>
+}
+
+
