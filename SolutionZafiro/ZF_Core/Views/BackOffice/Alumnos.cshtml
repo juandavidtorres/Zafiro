@@ -4,63 +4,76 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script>
-    $('.date-picker').datepicker();
-</script>
-   
-  
-                <div class="col-md-6 col-md-offset-3">
-                    <div class="widget">
-                        <div class="widget-header bordered-bottom bordered-blue">
-                            <span class="widget-caption">Registro de estudiante</span>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet box cyan-500">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-file-text"></i>Form Actions On Top & Bottom
+                </div>
+                <div class="tools">
+                    <a href="#" class="collapse" data-original-title="" title="">
+                    </a>
+                    <a href="#portlet-config" data-toggle="modal" class="config" data-original-title="" title="">
+                    </a>
+                    <a href="#" class="reload" data-original-title="" title="">
+                    </a>
+                    <a href="#" class="fullscreen" data-original-title="" title="">
+                    </a>
+                    <a href="#" class="remove" data-original-title="" title="">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">                
+                <form method="post"  action="/BackOffice/AddStudent">
+                    <div class="form-body">
+
+                        <div class="form-group form-md-line-input">
+                            <input type="text" class="form-control" id="txtcedula" placeholder="Ingrese la cedula">
+                            <label for="form_control_1">Cedula</label>
                         </div>
-                        <div class="widget-body">
-                            <div>
-                                <form role="form">
-                                    <div class="form-group">
-                                        <label for="txtcedula">Cedula</label>
-                                        <input type="text" class="form-control" id="txtcedula" placeholder="Ingrese la cedula">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="txtnombre">Nombre</label>
-                                        <input type="text" class="form-control" id="txtnombre" placeholder="Nombre">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="txtapellido">Apellido</label>
-                                        <input type="text" class="form-control" id="txtapellido" placeholder="Apellido">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="txtfecha">Fecha de nacimiento</label>
-                                        <span class="input-icon icon-right">
-                                            <input class="form-control date-picker" id="txtfecha" type="date" data-date-format="dd/mm/yyyy" placeholder="Birth Date">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="txttelefono">Telefono</label>
-                                        <input type="text" class="form-control" id="txttelefono" placeholder="Telefono">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="txtdireccion">Direccion</label>
-                                        <input type="text" class="form-control" id="txtdireccion" placeholder="Direccion">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" value="True" checked="checked" class="colored-blue">
-                                                <span class="text">Habilitado</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-blue">Guardar</button>
-                                </form>
-                            </div>
+                        <div class="form-group form-md-line-input">
+                            <input type="text" class="form-control" id="txtnombre" placeholder="Nombre">
+                            <label for="form_control_1">Nombre</label>
+                        </div>
+                        <div class="form-group form-md-line-input">
+                            <input type="text" class="form-control" id="txtapellido" placeholder="Apellido">
+                            <label for="form_control_1">Apellido</label>
+                        </div>
+                        <div class="form-group form-md-line-input">
+                            <input class="form-control form-control-inline input-medium date-picker" size="16" id="txtfecha" type="text" value="" />
+                            <label for="form_control_1">Fecha de nacimiento</label>
+                        </div>
+                        <div class="form-group form-md-line-input">
+                            <input type="text" class="form-control" id="txttelefono" placeholder="Telefono">
+                            <label for="txttelefono">Telefono</label>
+                        </div>
+                        <div class="form-group form-md-line-input has-success">
+                            <input type="text" class="form-control" id="txtdireccion" placeholder="Direccion">
+                            <label for="txtdireccion">Direccion</label>
                         </div>
                     </div>
-                </div>
-        
-    
+                    <div class="form-actions noborder">
+                        <button type="button" class="btn blue" >Submit</button>
+                        <button type="button" id="btnenviar" class="btn default">Cancel</button>                    
+                    </div>
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $('form').submit();
+                            alert('hola');
+                        });
+                    </script>
+
+                </form>                
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
