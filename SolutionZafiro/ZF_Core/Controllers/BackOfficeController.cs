@@ -20,12 +20,12 @@ namespace ZF_Core.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddStudent(string txtcedula,string txtnombre, string txtapellido,string txtfecha, string txttelefono,string txtdireccion)
+        public ActionResult AddStudent(FormCollection formCollection)//(string txtcedula,string txtnombre, string txtapellido,string txtfecha, string txttelefono,string txtdireccion)
         {
-            ViewBag.Titulo = "Alumnos";
+            
             ZF_Core.Models.ModelZafiro db = new Models.ModelZafiro();
 
-            return View();
+            return View("Alumnos");
         }
         public ActionResult Clases()
         {

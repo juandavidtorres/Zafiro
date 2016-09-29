@@ -27,53 +27,75 @@
                     </a>
                 </div>
             </div>
-            <div class="portlet-body form">                
-                <form method="post"  action="/BackOffice/AddStudent">
+            <div class="portlet-body form">
+               @using (Ajax.BeginForm("AddStudent", "BackOffice", new AjaxOptions() { HttpMethod = "POST", OnSuccess = "Foo" }))
+               {
+                    @Html.AntiForgeryToken()
                     <div class="form-body">
-
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" id="txtcedula" placeholder="Ingrese la cedula">
+                            <input type="text" class="form-control" id="txtcedula" name="txtcedula" placeholder="Ingrese la cedula">
                             <label for="form_control_1">Cedula</label>
                         </div>
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" id="txtnombre" placeholder="Nombre">
+                            <input type="text" class="form-control" id="txtnombre" name="txtnombre" placeholder="Nombre">
                             <label for="form_control_1">Nombre</label>
                         </div>
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" id="txtapellido" placeholder="Apellido">
+                            <input type="text" class="form-control" id="txtapellido" name="txtapellido" placeholder="Apellido">
                             <label for="form_control_1">Apellido</label>
                         </div>
                         <div class="form-group form-md-line-input">
-                            <input class="form-control form-control-inline input-medium date-picker" size="16" id="txtfecha" type="text" value="" />
+                            <input class="form-control form-control-inline input-medium date-picker" name="txtfecha" size="16" id="txtfecha" type="text" value="" />
                             <label for="form_control_1">Fecha de nacimiento</label>
                         </div>
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" id="txttelefono" placeholder="Telefono">
+                            <input type="text" class="form-control" id="txttelefono" name="txttelefono" placeholder="Telefono">
                             <label for="txttelefono">Telefono</label>
                         </div>
                         <div class="form-group form-md-line-input has-success">
-                            <input type="text" class="form-control" id="txtdireccion" placeholder="Direccion">
+                            <input type="text" class="form-control" id="txtdireccion" id="txtdireccion" placeholder="Direccion">
                             <label for="txtdireccion">Direccion</label>
                         </div>
                     </div>
                     <div class="form-actions noborder">
-                        <button type="button" class="btn blue" >Submit</button>
-                        <button type="button" id="btnenviar" class="btn default">Cancel</button>                    
+                        <button type="submit" class="btn blue">Enviar</button>
+                        <button type="button" id="btnSave" name="btnSave" class="btn default">Cancel</button>
                     </div>
-                    <script type="text/javascript">
-                        $(document).ready(function () {
-                            $('form').submit();
-                            alert('hola');
-                        });
-                    </script>
-
-                </form>                
+                }
             </div>
         </div>
 
     </div>
 
+    <div class="modal fade" id="basic" tabindex="-1" role="basic" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Modal Title</h4>
+                </div>
+                <div id="DivFormId" class="modal-body">
+                    Modal body goes here
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn blue">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
+    <script>
+        function Foo(result) {
+            alert('Hola');
+            if (result.SomePropertyThatExistsInYourJsonObject) {
+                // the server returned a JSON object => show the dialog window here
+            } else {
+                // the server returned a partial view => update the DOM:
+                $('#DivFormId').html(result);
+            }
+        }
+    </script>
 </div>
-
-
