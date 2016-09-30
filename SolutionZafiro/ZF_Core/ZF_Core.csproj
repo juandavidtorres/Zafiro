@@ -184,6 +184,7 @@
     <Compile Include="Models\MatriculaFormaPago.cs" />
     <Compile Include="Models\ModelZafiro.cs" />
     <Compile Include="Models\Profesor.cs" />
+    <Compile Include="Models\RespuestaProceso.cs" />
     <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -295,6 +296,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\global\css\components-themes-md.css" />
     <Content Include="Content\global\css\components-themes.css" />
+    <Content Include="Content\global\css\jquery.growl.css" />
     <Content Include="Content\global\css\plugins-md.css" />
     <Content Include="Content\global\css\plugins.css" />
     <Content Include="Content\global\img\accordion-plusminus.png" />
@@ -726,6 +728,7 @@
     <Content Include="Content\global\plugins\uniform\jquery.uniform.min.js" />
     <Content Include="Content\global\scripts\backbones.js" />
     <Content Include="Content\global\scripts\datatable.js" />
+    <Content Include="Content\global\scripts\jquery.growl.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

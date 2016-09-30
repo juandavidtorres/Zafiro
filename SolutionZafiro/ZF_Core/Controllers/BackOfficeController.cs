@@ -20,12 +20,30 @@ namespace ZF_Core.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddStudent(FormCollection formCollection)//(string txtcedula,string txtnombre, string txtapellido,string txtfecha, string txttelefono,string txtdireccion)
+        public JsonResult AddStudent(FormCollection formCollection)//(string txtcedula,string txtnombre, string txtapellido,string txtfecha, string txttelefono,string txtdireccion)
         {
-            
-            ZF_Core.Models.ModelZafiro db = new Models.ModelZafiro();
+            JsonResult Respuesta;
+            try
+            {
+                ZF_Core.Models.ModelZafiro db = new Models.ModelZafiro();
+                // db.Estudiante.AddOrUpdate()
+                Respuesta= new JsonResult()
+                {
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                    Data = new ZF_Core.Models.RespuestaProceso() { Autorizado = true, Mensaje = "Autorizado" }
+                };
+            }
+            catch (System.Exception ex)
+            {
+                Respuesta = new JsonResult()
+                {
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                    Data = new ZF_Core.Models.RespuestaProceso() { Autorizado = false, Mensaje = ex.Message }
+                };
+            }
 
-            return View("Alumnos");
+            return Respuesta;
+
         }
         public ActionResult Clases()
         {
