@@ -20,17 +20,24 @@ namespace ZF_Core.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult AddStudent(FormCollection formCollection)//(string txtcedula,string txtnombre, string txtapellido,string txtfecha, string txttelefono,string txtdireccion)
+        public JsonResult AddStudent(FormCollection frmformulario)//(string txtcedula,string txtnombre, string txtapellido,string txtfecha, string txttelefono,string txtdireccion)
         {
             JsonResult Respuesta;
             try
             {
                 ZF_Core.Models.ModelZafiro db = new Models.ModelZafiro();
-                // db.Estudiante.AddOrUpdate()
+                ZF_Core.Models.Estudiante Student = new Models.Estudiante();
+                Student.Apellido = frmformulario["txtapellido"];
+                Student.Nombre = frmformulario["txtnombre"];
+                Student.Nuip = frmformulario["txtcedula"];
+                Student.Telefono = frmformulario["txttelefono"];
+
+                db.Estudiante.AddOrUpdate(Student);
+                db.SaveChanges();
                 Respuesta= new JsonResult()
                 {
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                    Data = new ZF_Core.Models.RespuestaProceso() { Autorizado = true, Mensaje = "Autorizado" }
+                    Data = new ZF_Core.Models.RespuestaProceso() { Autorizado = true, Mensaje = "Operacion exitosa, estudiante creado correctamente" }
                 };
             }
             catch (System.Exception ex)

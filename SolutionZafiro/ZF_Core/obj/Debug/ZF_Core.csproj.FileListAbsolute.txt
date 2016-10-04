@@ -122,3 +122,6 @@ E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\ZF_Core\bin\Microsoft.Owin.Security
 E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\ZF_Core\bin\es\Microsoft.Owin.resources.dll
 E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\ZF_Core\bin\es\Microsoft.Owin.Host.SystemWeb.resources.dll
 E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\ZF_Core\bin\es\Microsoft.Owin.Security.resources.dll
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\ZF_Core\bin\Microsoft.AspNet.Identity.Core.dll
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\ZF_Core\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\ZF_Core\bin\Microsoft.AspNet.Identity.Owin.dll
