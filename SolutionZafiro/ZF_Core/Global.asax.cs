@@ -17,6 +17,7 @@ namespace ZF_Core
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.Email;
+            
         }
     }
 }

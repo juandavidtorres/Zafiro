@@ -125,3 +125,5 @@ E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\ZF_Core\bin\es\Microsoft.Owin.Secur
 E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\ZF_Core\bin\Microsoft.AspNet.Identity.Core.dll
 E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\ZF_Core\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\ZF_Core\bin\Microsoft.AspNet.Identity.Owin.dll
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\ZF_Core\bin\SendGrid.CSharp.HTTP.Client.dll
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\ZF_Core\bin\SendGrid.dll

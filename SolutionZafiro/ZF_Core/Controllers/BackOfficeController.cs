@@ -12,9 +12,7 @@ namespace ZF_Core.Controllers
         }
         public ActionResult Alumnos()
         {
-            ViewBag.Titulo = "Alumnos";
-            ZF_Core.Models.ModelZafiro db = new Models.ModelZafiro();
-            
+            ViewBag.Titulo = "Alumnos";            
             return View();
         }
 
@@ -25,15 +23,15 @@ namespace ZF_Core.Controllers
             JsonResult Respuesta;
             try
             {
-                ZF_Core.Models.ModelZafiro db = new Models.ModelZafiro();
-                ZF_Core.Models.Estudiante Student = new Models.Estudiante();
-                Student.Apellido = frmformulario["txtapellido"];
-                Student.Nombre = frmformulario["txtnombre"];
-                Student.Nuip = frmformulario["txtcedula"];
-                Student.Telefono = frmformulario["txttelefono"];
+                
+               //// ZF_Core.Models.Estudiante Student = new Models.Estudiante();
+               // Student.Apellido = frmformulario["txtapellido"];
+               // Student.Nombre = frmformulario["txtnombre"];
+               // Student.Nuip = frmformulario["txtcedula"];
+               // Student.Telefono = frmformulario["txttelefono"];
 
-                db.Estudiante.AddOrUpdate(Student);
-                db.SaveChanges();
+               //// db.Estudiante.AddOrUpdate(Student);
+               // db.SaveChanges();
                 Respuesta= new JsonResult()
                 {
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet,

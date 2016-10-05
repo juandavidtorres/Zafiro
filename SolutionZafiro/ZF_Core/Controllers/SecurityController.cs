@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using ZF_Core.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace ZF_Core.Content
 {
@@ -18,22 +19,79 @@ namespace ZF_Core.Content
         }
 
 
-        [HttpPost]
-        private void CreateUser(FormCollection frmformulario)
+        private GestionUsuarios ObtenerGestionUsuarios()
         {
-            ModelZafiro context = new ModelZafiro();
-            if (ModelState.IsValid)
+            return HttpContext.GetOwinContext().GetUserManager<GestionUsuarios>();
+        }
+
+      
+       
+
+        private void registrarErrores(IdentityResult resultado)
+        {
+            if (resultado != null)
             {
-                var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-                var user = new ApplicationUser();
-                user.Email= frmformulario["email"];
-                user.EmailConfirmed = true;
-                user.UserName= frmformulario["email"];
-                var OutputUser = UserManager.Create(user, frmformulario["password"]);
+                foreach (string detalleError in resultado.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, detalleError);
+                }
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]        
+        public async Task<JsonResult> CreateUser(FormCollection frmformulario)
+        {
+            JsonResult Respuesta = null;
+            try
+            {
+                ContextoIdentity context = new ContextoIdentity();
+                if (ModelState.IsValid)
+                {
+                    Usuario user = new Usuario();                  
+                    user.Email = frmformulario["email"];
+                    user.UserName = frmformulario["username"];
+                    user.EmailConfirmed = true;
+                    GestionUsuarios gestionUsuarios = ObtenerGestionUsuarios();
+                    IdentityResult OutputUser = await gestionUsuarios.CreateAsync(user, frmformulario["password"]);                   
+                    if (!OutputUser.Succeeded)
+                    {
+                        foreach (string item in OutputUser.Errors)
+                        {
+                            Respuesta = new JsonResult()
+                            {
+                                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                                Data = new RespuestaProceso() { Autorizado = true, Mensaje = item }
+                            };
+                        }
+
+                    }
+                    else
+                    {
+                        EmailService.SendMail("Prueba", "jdtorres31@gmail.com", "Prueba", "jdtorres31@gmail.com", "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");
+
+                        Respuesta = new JsonResult()
+                        {
+                            JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                            Data = new ZF_Core.Models.RespuestaProceso() { Autorizado = true, Mensaje = "Operacion exitosa, usuario creado correctamente" }
+                        };
+
+                    }
+                }
 
             }
+            catch (System.Exception ex)
+            {
+                Respuesta = new JsonResult()
+                {
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                    Data = new ZF_Core.Models.RespuestaProceso() { Autorizado = true, Mensaje = ex.Message }
+                };
+
+            }
+            
            
+            return Respuesta;
         }
 
 

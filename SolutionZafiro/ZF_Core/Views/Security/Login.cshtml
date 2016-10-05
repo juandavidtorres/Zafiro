@@ -33,5 +33,86 @@
         </div>
     </div>
 </form> 
+@using (Ajax.BeginForm("CreateUser", "Security", new AjaxOptions() { HttpMethod = "POST", OnSuccess = "onTestComplete", OnFailure = "onTestFailure", OnBegin = "OnValidate" }))
+{
+    @Html.AntiForgeryToken()     
+    <div class="form-group">
+        <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email" value="">
+    </div>   
+    <div class="form-group">
+        <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Usuario" value="">
+    </div>
+    <div class="form-group">
+        <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+    </div>
+    <div class="form-group">
+        <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirmar Password">
+    </div>  
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+            </div>
+        </div>
+    </div>
+}
+<script>
+    function OnValidate() {
+                 
+        var email = document.getElementById("email");
+        var username = document.getElementById("username");
+        var password = document.getElementById("password");
+        var cfpassword = document.getElementById("confirm-password");      
+      
+        if (email.value == "") {
+            $.growl.error({ title: "", message: "El email es obligatoria" });
+            email.focus();
+            return false;
+        }
+
+        if (username.value == "") {
+            $.growl.error({ title: "", message: "El nombre de usuario es obligatorio" });
+            username.focus();
+            return false;
+        }
+    
+        if (password.value == "") {
+            $.growl.error({ title: "", message: "El password de usuario es obligatorio" });
+            password.focus();
+            return false;
+        }
+
+        if (password.value == "") {
+            $.growl.error({ title: "", message: "El password de usuario es obligatorio" });
+            password.focus();
+            return false;
+        }
+
+        if (cfpassword.value == "") {
+            $.growl.error({ title: "", message: "La confirmacion del password es obligatorio" });
+            cfpassword.focus();
+            return false;
+        }
+        if (cfpassword.value != password.value) {
+            $.growl.error({ title: "", message: "El password no coincide con la confirmacion de usuario es obligatorio" });
+            password.focus();
+            return false;
+        }
+
+        return true;
+    }
+
+    function onTestFailure(xhr, status, error) {     
+        $.growl.error({ message: data.Mensaje });
+    }
+
+    function onTestComplete(data, status, xhr) {       
+        if (data.Autorizado == true)
+            $.growl.notice({ title: "Zafiro ", message: data.Mensaje });
+        else
+            $.growl.error({ title: "Zafiro ", message: data.Mensaje });
+
+    }
+</script>
 
 
