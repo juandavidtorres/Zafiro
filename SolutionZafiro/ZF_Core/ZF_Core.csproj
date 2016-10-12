@@ -770,6 +770,8 @@
     <Content Include="Views\BackOffice\Clases.cshtml" />
     <Content Include="Views\Shared\_LayoutPageLogin.cshtml" />
     <Content Include="Views\Security\Login.cshtml" />
+    <Content Include="Views\Security\Register.cshtml" />
+    <Content Include="Views\Shared\_LayoutPageRegister.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

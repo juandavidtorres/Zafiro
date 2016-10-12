@@ -24,9 +24,8 @@ namespace DataLayer
             db.AddInParameter(DatabaseCommand, "Movil", DbType.String, Movil);
             db.AddInParameter(DatabaseCommand, "Direccion", DbType.String, Direccion);
             db.AddInParameter(DatabaseCommand, "CodigoCompañia", DbType.String, CodigoCompañia);
-            db.AddInParameter(DatabaseCommand, "AspUserId", DbType.String, AspUserId);          
-
-
+            db.AddInParameter(DatabaseCommand, "AspUserId", DbType.String, AspUserId);       
+            
             DbConnection connection = null;
             try
             {

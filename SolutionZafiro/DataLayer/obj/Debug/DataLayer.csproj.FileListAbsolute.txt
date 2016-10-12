@@ -1,0 +1,11 @@
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\DataLayer\bin\Debug\DataLayer.dll.config
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\DataLayer\bin\Debug\DataLayer.dll
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\DataLayer\bin\Debug\DataLayer.pdb
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\DataLayer\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\DataLayer\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\DataLayer\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Logging.Database.dll
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\DataLayer\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Logging.dll
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\DataLayer\bin\Debug\Microsoft.Practices.ObjectBuilder.dll
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\DataLayer\obj\Debug\DataLayer.csprojResolveAssemblyReference.cache
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\DataLayer\obj\Debug\DataLayer.dll
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\DataLayer\obj\Debug\DataLayer.pdb

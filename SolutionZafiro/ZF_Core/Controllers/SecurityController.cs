@@ -24,8 +24,12 @@ namespace ZF_Core.Content
             return HttpContext.GetOwinContext().GetUserManager<GestionUsuarios>();
         }
 
-      
-       
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+
 
         private void registrarErrores(IdentityResult resultado)
         {
@@ -39,7 +43,7 @@ namespace ZF_Core.Content
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]        
+        [ValidateAntiForgeryToken]
         public async Task<JsonResult> CreateUser(FormCollection frmformulario)
         {
             JsonResult Respuesta = null;
@@ -48,14 +52,15 @@ namespace ZF_Core.Content
                 ContextoIdentity context = new ContextoIdentity();
                 if (ModelState.IsValid)
                 {
-                    Usuario user = new Usuario();                  
+                    Usuario user = new Usuario();
                     user.Email = frmformulario["email"];
                     user.UserName = frmformulario["username"];
-                    user.EmailConfirmed = true;
+                    user.EmailConfirmed = false;
                     GestionUsuarios gestionUsuarios = ObtenerGestionUsuarios();
-                    IdentityResult OutputUser = await gestionUsuarios.CreateAsync(user, frmformulario["password"]);                   
+                    IdentityResult OutputUser = await gestionUsuarios.CreateAsync(user, frmformulario["password"]);
                     if (!OutputUser.Succeeded)
                     {
+
                         foreach (string item in OutputUser.Errors)
                         {
                             Respuesta = new JsonResult()
@@ -68,6 +73,11 @@ namespace ZF_Core.Content
                     }
                     else
                     {
+                        var code = await gestionUsuarios.GenerateEmailConfirmationTokenAsync(user.UserName);
+                        var callbackUrl = Url.Action( "ConfirmEmail", "Account", new { userId = user.Id, code = code },
+               protocol: Request.Url.Scheme);
+
+
                         EmailService.SendMail("Prueba", "jdtorres31@gmail.com", "Prueba", "jdtorres31@gmail.com", "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");
 
                         Respuesta = new JsonResult()
@@ -85,15 +95,20 @@ namespace ZF_Core.Content
                 Respuesta = new JsonResult()
                 {
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                    Data = new ZF_Core.Models.RespuestaProceso() { Autorizado = true, Mensaje = ex.Message }
+                    Data = new ZF_Core.Models.RespuestaProceso() { Autorizado = false, Mensaje = ex.Message }
                 };
 
             }
-            
-           
+
+
             return Respuesta;
         }
 
+        [AllowAnonymous]
+        public ActionResult ConfirmEmail()
+        {
+            return View();
+        }
 
         [HttpPost]
         public ActionResult LogIn(FormCollection frmformulario)
@@ -102,13 +117,13 @@ namespace ZF_Core.Content
             string txtusuario = "";
             string txtclave = "";
 
-            txtusuario= frmformulario["username"];
-            txtclave= frmformulario["password"];
+            txtusuario = frmformulario["username"];
+            txtclave = frmformulario["password"];
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            
+
             // Don't do this in production!
             if (txtusuario == "admin@admin.com" && txtclave == "admin@admin.com")
             {
@@ -125,7 +140,7 @@ namespace ZF_Core.Content
                 authManager.SignIn(identity);
 
                 return Redirect(GetRedirectUrl(""));
-            }      
+            }
             return View();
         }
         private string GetRedirectUrl(string returnUrl)
