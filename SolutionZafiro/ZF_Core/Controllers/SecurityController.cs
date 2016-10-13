@@ -6,6 +6,8 @@ using ZF_Core.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security.DataProtection;
+using Microsoft.Owin.Security;
 
 namespace ZF_Core.Content
 {
@@ -19,6 +21,11 @@ namespace ZF_Core.Content
         }
 
 
+        /// <summary>
+        /// Obtiene el contexto de seguridad para ASP.NET Identity, con la instancia de esta clase se pueden crear los usuarios y todo el manejo de la cuenta de usuario
+        /// , es elpunto de inicio de la seguridad de la aplicacion
+        /// </summary>
+        /// <returns></returns>
         private GestionUsuarios ObtenerGestionUsuarios()
         {
             return HttpContext.GetOwinContext().GetUserManager<GestionUsuarios>();
@@ -49,14 +56,14 @@ namespace ZF_Core.Content
             JsonResult Respuesta = null;
             try
             {
-                ContextoIdentity context = new ContextoIdentity();
+                Usuario user = new Usuario();
+                GestionUsuarios gestionUsuarios = ObtenerGestionUsuarios();                
                 if (ModelState.IsValid)
                 {
-                    Usuario user = new Usuario();
+
                     user.Email = frmformulario["email"];
                     user.UserName = frmformulario["username"];
                     user.EmailConfirmed = false;
-                    GestionUsuarios gestionUsuarios = ObtenerGestionUsuarios();
                     IdentityResult OutputUser = await gestionUsuarios.CreateAsync(user, frmformulario["password"]);
                     if (!OutputUser.Succeeded)
                     {
@@ -73,12 +80,16 @@ namespace ZF_Core.Content
                     }
                     else
                     {
-                        var code = await gestionUsuarios.GenerateEmailConfirmationTokenAsync(user.UserName);
-                        var callbackUrl = Url.Action( "ConfirmEmail", "Account", new { userId = user.Id, code = code },
-               protocol: Request.Url.Scheme);
+                        var provider = new DpapiDataProtectionProvider("Zafiro");
+                        gestionUsuarios.UserTokenProvider = new DataProtectorTokenProvider<Usuario, string>(provider.Create("UserToken"))
+        as IUserTokenProvider<Usuario, string>;
+                        var code = await gestionUsuarios.GenerateEmailConfirmationTokenAsync(user.Id);
+                        var callbackUrl = Url.Action("ConfirmEmail", "Security", new { userId = user.Id, code = code },
+                protocol: Request.Url.Scheme);
 
 
-                        EmailService.SendMail("Prueba", "jdtorres31@gmail.com", "Prueba", "jdtorres31@gmail.com", "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");
+                        EmailService.SendMail("Por favor confirme su cuenta ingresando a este link: <a href=\""
+                                               + callbackUrl + "\">link</a>", "jdtorres31@gmail.com","Activacion de cuenta" , "jdtorres31@gmail.com", "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");
 
                         Respuesta = new JsonResult()
                         {
@@ -105,8 +116,33 @@ namespace ZF_Core.Content
         }
 
         [AllowAnonymous]
-        public ActionResult ConfirmEmail()
+        public ActionResult ConfirmEmail(string userId,string code)
         {
+            try
+            {
+                GestionUsuarios gestionUsuarios = ObtenerGestionUsuarios();                
+                var provider = new DpapiDataProtectionProvider("Zafiro");
+                gestionUsuarios.UserTokenProvider = new DataProtectorTokenProvider<Usuario, string>(provider.Create("UserToken"))as IUserTokenProvider<Usuario, string>;
+                IdentityResult OutputUser = gestionUsuarios.ConfirmEmail(userId, code);
+
+                if (OutputUser.Succeeded)
+                {
+                    ViewBag.MensajeConfirmacion = "Registro existoso, acontinuacion sera redireccionado a la pagina de inicio de session ";                   
+                }
+                else
+                {
+                    foreach (string item in OutputUser.Errors)
+                    {
+                        ViewBag.MensajeConfirmacion = item;
+                    }
+                }
+
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
             return View();
         }
 
@@ -124,23 +160,22 @@ namespace ZF_Core.Content
                 return View();
             }
 
-            // Don't do this in production!
-            if (txtusuario == "admin@admin.com" && txtclave == "admin@admin.com")
+            GestionUsuarios gestionUsuarios = ObtenerGestionUsuarios();
+            var user = gestionUsuarios.FindAsync(txtusuario, txtclave);
+
+            if (user != null)
             {
-                var identity = new ClaimsIdentity(new[] {
-                new Claim(ClaimTypes.Name, "Ben"),
-                new Claim(ClaimTypes.Email, "a@b.com"),
-                new Claim(ClaimTypes.Country, "England")
-            },
-                        "ApplicationCookie");
+                var AutheticationManager = HttpContext.GetOwinContext().Authentication;
+                AutheticationManager.SignOut();
+                var result = gestionUsuarios.
 
-                var ctx = Request.GetOwinContext();
-                var authManager = ctx.Authentication;
-
-                authManager.SignIn(identity);
-
-                return Redirect(GetRedirectUrl(""));
             }
+            else
+            {
+                ModelState.AddModelError("", "Invalid username or password.");
+            }
+
+
             return View();
         }
         private string GetRedirectUrl(string returnUrl)

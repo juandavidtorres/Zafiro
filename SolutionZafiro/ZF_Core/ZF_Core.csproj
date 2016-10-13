@@ -772,6 +772,8 @@
     <Content Include="Views\Security\Login.cshtml" />
     <Content Include="Views\Security\Register.cshtml" />
     <Content Include="Views\Shared\_LayoutPageRegister.cshtml" />
+    <Content Include="Views\Security\ConfirmEmail.cshtml" />
+    <Content Include="Views\Shared\_LayoutPageConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
