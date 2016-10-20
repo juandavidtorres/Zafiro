@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security;
+using System.Collections.Generic;
 
 namespace ZF_Core.Content
 {
@@ -30,6 +31,8 @@ namespace ZF_Core.Content
         {
             return HttpContext.GetOwinContext().GetUserManager<GestionUsuarios>();
         }
+
+
 
         public ActionResult Register()
         {
@@ -165,10 +168,13 @@ namespace ZF_Core.Content
 
             if (user != null)
             {
-                var AutheticationManager = HttpContext.GetOwinContext().Authentication;
-                AutheticationManager.SignOut();
-                var result = gestionUsuarios.
-
+                var authenticationManager = HttpContext.GetOwinContext().Authentication;
+                authenticationManager.SignOut();
+                var claims = new List<Claim>();
+                claims.Add(new Claim(ClaimTypes.Name, txtusuario));         
+                var id = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+                authenticationManager.SignIn(new AuthenticationProperties() { },id);
+                Url.Action("Home", "Student");
             }
             else
             {
@@ -188,4 +194,6 @@ namespace ZF_Core.Content
             return returnUrl;
         }
     }
+
+   
 }

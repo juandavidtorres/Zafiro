@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.Owin.Security;
 
 namespace ZF_Core.Models
 {
@@ -24,12 +25,25 @@ namespace ZF_Core.Models
         }
     }
 
+
+
+
     public class Usuario : IdentityUser
     {
 
     }
 
-   
+    public class ApplicationUser : Usuario
+    {
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+        {
+            // Tenga en cuenta que el valor de authenticationType debe coincidir con el definido en CookieAuthenticationOptions.AuthenticationType
+            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            // Agregar aquí notificaciones personalizadas de usuario
+            return userIdentity;
+        }
+
+    }
 
     public class InicializacionBBDDIdentity : DropCreateDatabaseIfModelChanges<ContextoIdentity>
     {
