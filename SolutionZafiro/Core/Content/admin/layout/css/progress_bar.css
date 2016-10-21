@@ -1,0 +1,18 @@
+/*** 
+ Pace Progress 
+ ***/
+.pace .pace-progress {
+  z-index: 10000;
+  top: 65px;
+  height: 2px;
+}
+
+.pace .pace-progress-inner {
+  box-shadow: none;
+}
+
+.pace .pace-activity {
+  top: 77px;
+  right: 22px;
+  border-radius: 10px !important;
+}

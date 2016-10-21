@@ -1,0 +1,139 @@
+﻿
+@{
+    ViewBag.Title = "Alumnos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="note note-primary note-shadow">
+    <p>
+        Esta opcion permite crear un estudiante en el sistema Zafiro.
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet box red-500">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-file-text"></i>Ingresar estudiante
+                </div>
+                <div class="tools">
+                    <a href="#" class="collapse" data-original-title="" title="">
+                    </a>
+                    <a href="#" class="reload" data-original-title="" title="">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                @using (Ajax.BeginForm("AddStudent", "BackOffice", new AjaxOptions() { HttpMethod = "POST", OnSuccess = "onTestComplete", OnFailure = "onTestFailure",OnBegin= "OnValidate" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-body">
+                        <div class="form-group form-md-line-input">
+                            <input type="text" class="form-control" id="txtcedula" name="txtcedula" placeholder="Ingrese la cedula">
+                            <label for="form_control_1">Cedula</label>
+                        </div>
+                        <div class="form-group form-md-line-input">
+                            <input type="text" class="form-control" id="txtnombre" name="txtnombre" placeholder="Nombre">
+                            <label for="form_control_1">Nombre</label>
+                        </div>
+                        <div class="form-group form-md-line-input">
+                            <input type="text" class="form-control" id="txtapellido" name="txtapellido" placeholder="Apellido">
+                            <label for="form_control_1">Apellido</label>
+                        </div>
+                        <div class="form-group form-md-line-input">
+                            <input class="form-control form-control-inline input-medium date-picker" name="txtfecha" size="16" id="txtfecha" type="datetime" value="" />
+                            <label for="form_control_1">Fecha de nacimiento</label>
+                        </div>
+                        <div class="form-group form-md-line-input">
+                            <input type="text" class="form-control" id="txttelefono" name="txttelefono" placeholder="Telefono">
+                            <label for="txttelefono">Telefono</label>
+                        </div>
+                        <div class="form-group form-md-line-input has-success">
+                            <input type="text" class="form-control" id="txtdireccion" name="txtdireccion" placeholder="Direccion">
+                            <label for="txtdireccion">Direccion</label>
+                        </div>
+                    </div>
+                        <div class="form-actions noborder">
+                            <button type="submit" class="btn blue">Enviar</button>
+                            <button type="button" id="btnSave" name="btnSave" data-toggle="modal" href="#basic" class="btn default">Cancel</button>
+                        </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    function onTestFailure(xhr, status, error) {
+        console.log("Entro en error");
+        console.log("Mensaje", "error");
+        console.log("xhr", xhr);
+        console.log("status", status);
+        $.growl.error({ message: data.Mensaje });
+    }
+
+    function onTestComplete(data, status, xhr) {
+        console.log("Entro en ok");
+        console.log("Mensaje", "ok");
+        console.log("data", data.Mensaje);
+        console.log("data", data.Autorizado);
+        console.log("status", status);
+        console.log("xhr", xhr);
+        if (data.Autorizado == true)
+            $.growl.notice({title: "Zafiro ", message: data.Mensaje });
+        else
+            $.growl.error({title: "Zafiro ", message: data.Mensaje });
+
+    }
+
+    function OnValidate() {
+
+        var cedula = document.getElementById("txtcedula");
+        var nombre = document.getElementById("txtnombre");
+        var apellido = document.getElementById("txtapellido");
+        var txtfecha = document.getElementById("txtfecha");
+        var direccion = document.getElementById("txtdireccion");
+        var telefono = document.getElementById("txttelefono");
+
+        if (cedula.value == "") {
+            $.growl.error({ title: "", message: "La cedula es obligatoria" });
+            cedula.focus();
+            return false;
+        }
+        if (nombre.value == "") {
+            $.growl.error({ title: "", message: "El nombre es obligatorio" });
+            nombre.focus();
+            return false;
+        }
+
+        if (apellido.value == "") {
+            $.growl.error({ title: "", message: "El apellido es obligatorio" });
+            apellido.focus();
+            return false;
+        }
+        if (txtfecha.value == "") {
+            $.growl.error({ title: "", message: "La fecha de nacimiento es obligatoria" });
+            txtfecha.focus();
+            return false;
+        }
+
+        if (txttelefono.value == "") {
+            $.growl.error({ title: "", message: "El telefono es obligatorio" });
+            txttelefono.focus();
+            return false;
+        }
+
+        if (direccion.value == "") {
+            $.growl.error({ title: "", message: "La direccion es obligatoria" });
+            direccion.focus();
+            return false;
+        }
+        
+        return true;
+    }
+</script>
