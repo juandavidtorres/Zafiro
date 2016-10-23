@@ -68,3 +68,9 @@ E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\Core\bin\es\System.Web.Http.resourc
 E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\Core\bin\es\System.Web.Http.WebHost.resources.dll
 E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\Core\obj\Debug\Core.dll
 E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\Core\obj\Debug\Core.pdb
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\Core\bin\DataLayer.dll
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\Core\bin\Microsoft.Practices.EnterpriseLibrary.Data.dll
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\Core\bin\Microsoft.Practices.EnterpriseLibrary.Common.dll
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\Core\bin\Microsoft.Practices.ObjectBuilder.dll
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\Core\bin\DataLayer.pdb
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\Core\obj\Debug\Core.csprojResolveAssemblyReference.cache

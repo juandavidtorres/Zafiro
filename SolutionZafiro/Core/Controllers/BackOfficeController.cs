@@ -22,16 +22,8 @@ namespace ZF_Core.Controllers
         {
             JsonResult Respuesta;
             try
-            {
-                
-               //// ZF_Core.Models.Estudiante Student = new Models.Estudiante();
-               // Student.Apellido = frmformulario["txtapellido"];
-               // Student.Nombre = frmformulario["txtnombre"];
-               // Student.Nuip = frmformulario["txtcedula"];
-               // Student.Telefono = frmformulario["txttelefono"];
-
-               //// db.Estudiante.AddOrUpdate(Student);
-               // db.SaveChanges();
+            {                
+             
                 Respuesta= new JsonResult()
                 {
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet,

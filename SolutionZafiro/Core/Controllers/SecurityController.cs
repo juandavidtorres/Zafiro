@@ -14,6 +14,7 @@ namespace ZF_Core.Content
         // GET: Security
         public ActionResult Login()
         {
+            ViewBag.Title = "Login";
             return View();
         }
 
@@ -32,28 +33,34 @@ namespace ZF_Core.Content
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<JsonResult> CreateUser(FormCollection frmformulario)
+        [AllowAnonymous]
+        public JsonResult CreateUser(FormCollection frmformulario)
         {
             JsonResult Respuesta = null;
             try
             {
+                DataLayer.DataLayer oDatos = new DataLayer.DataLayer();
                 string txtusuario = frmformulario["username"];
                 string txtClave = frmformulario["password"];
                 string txtEmail = frmformulario["email"];
-                Membership.CreateUser(txtusuario, txtClave, txtEmail);
-                MembershipUser userInfo = Membership.GetUser(txtusuario);                
+                string txtCodigo= frmformulario["codenterprise"];
+                txtCodigo = oDatos.ZFCore_RecuperarCodigoCompania(txtCodigo);               
 
-                var callbackUrl = Url.Action("ConfirmEmail", "Security", new { userId = userInfo.ProviderUserKey },
+                Membership.CreateUser(txtusuario, txtClave, txtEmail);
+                MembershipUser userInfo = Membership.GetUser(txtusuario);
+                userInfo.IsApproved = false;
+                Membership.UpdateUser(userInfo);
+                var callbackUrl = Url.Action("ConfirmEmail", "Security", new { userId = userInfo.ProviderUserKey,code=txtCodigo },
                         protocol: Request.Url.Scheme);
 
                 EmailService.SendMail("Por favor confirme su cuenta ingresando a este link: <a href=\""
-                                                 + callbackUrl + "\">link</a>", "jdtorres31@gmail.com","Activacion de cuenta" , "jdtorres31@gmail.com", "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");
+                                                 + callbackUrl + "\">link</a>", oDatos.ZFCore_RecuperarParametro("CorreodeConfirmaciondeCuenta",txtCodigo),"Activacion de cuenta" , txtEmail, oDatos.ZFCore_RecuperarParametro("ApiSendGrid",txtCodigo));
 
 
                Respuesta = new JsonResult()
                 {
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                    Data = new ZF_Core.Models.RespuestaProceso() { Autorizado = true, Mensaje = "Operacion exitosa, usuario creado correctamente" }
+                    Data = new ZF_Core.Models.RespuestaProceso() { Autorizado = true, Mensaje = "Operacion exitosa, usuario creado correctamente, se ha enviado un correo a su email para confirmar su cuenta" }
                 };               
 
             }
@@ -66,8 +73,6 @@ namespace ZF_Core.Content
                 };
 
             }
-
-
             return Respuesta;
         }
 
@@ -76,33 +81,21 @@ namespace ZF_Core.Content
         {
             try
             {
-                //GestionUsuarios gestionUsuarios = ObtenerGestionUsuarios();                
-                //var provider = new DpapiDataProtectionProvider("Zafiro");
-                //gestionUsuarios.UserTokenProvider = new DataProtectorTokenProvider<Usuario, string>(provider.Create("UserToken"))as IUserTokenProvider<Usuario, string>;
-                //IdentityResult OutputUser = gestionUsuarios.ConfirmEmail(userId, code);
-
-                //if (OutputUser.Succeeded)
-                //{
-                //    ViewBag.MensajeConfirmacion = "Registro existoso, acontinuacion sera redireccionado a la pagina de inicio de session ";                   
-                //}
-                //else
-                //{
-                //    foreach (string item in OutputUser.Errors)
-                //    {
-                //        ViewBag.MensajeConfirmacion = item;
-                //    }
-                //}
+               MembershipUser Usuario= Membership.GetUser(userId, false);
+                Usuario.IsApproved = true;
+                Membership.UpdateUser(Usuario);
 
             }
             catch (System.Exception)
             {
 
-                throw;
+                
             }
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult LogIn(FormCollection frmformulario)
         {
             JsonResult Respuesta = null;
