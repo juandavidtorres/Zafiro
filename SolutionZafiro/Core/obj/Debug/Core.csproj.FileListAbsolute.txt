@@ -74,3 +74,5 @@ E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\Core\bin\Microsoft.Practices.Enterp
 E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\Core\bin\Microsoft.Practices.ObjectBuilder.dll
 E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\Core\bin\DataLayer.pdb
 E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\Core\obj\Debug\Core.csprojResolveAssemblyReference.cache
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\Core\bin\Microsoft.Practices.EnterpriseLibrary.Logging.Database.dll
+E:\Proyectos\Proyectos\Zafiro\SolutionZafiro\Core\bin\Microsoft.Practices.EnterpriseLibrary.Logging.dll

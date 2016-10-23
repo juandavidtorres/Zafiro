@@ -81,7 +81,7 @@
             return false;
         }
 
-        if (codenterprise.value.length < 6) {
+        if (codenterprise.value== "") {
             $.growl.error({ title: "", message: "El codigo de su iglesia es obligatorio, si no lo tiene consulte a su administrador" });
             codenterprise.focus();
             return false;

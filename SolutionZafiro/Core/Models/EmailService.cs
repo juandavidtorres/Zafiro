@@ -14,7 +14,7 @@ namespace ZF_Core.Models
 {
     public class EmailService  {
 
-        public static async void SendMail(string Message, string Emailorigin, string Subject, string EmailDestiny,string ApiKey)
+        public static  void SendMail(string Message, string Emailorigin, string Subject, string EmailDestiny,string ApiKey)
         {
             try
             {                

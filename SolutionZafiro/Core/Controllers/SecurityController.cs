@@ -21,9 +21,10 @@ namespace ZF_Core.Content
 
 
 
-
+        
+        [AllowAnonymous]
         public ActionResult Register()
-        {
+        {            
             return View();
         }
 
