@@ -42,6 +42,35 @@ namespace DataLayer
             return Parametro;
         }
 
+
+        public IDataReader ZFCore_RecuperarCompaniaPorUsuario(string UserId)
+        {
+            DbConnection connection = null;
+          
+            try
+            {
+                Database db = DatabaseFactory.CreateDatabase(); //Crea el objeto base de datos, esto representa la connection a la base de datos indicada en el archivo de configuracion
+                string SqlCommand = "ZFCore_RecuperarCompaniaPorUsuario";
+                DbCommand DatabaseCommand = db.GetStoredProcCommand(SqlCommand);//Crea un SqlCommandComand a partir del nombre del procedimiento almacenado
+                db.AddInParameter(DatabaseCommand, "UserId", DbType.String, UserId);
+             
+                using (connection = db.CreateConnection())
+                {
+                    connection.Open();
+                    return db.ExecuteReader(DatabaseCommand);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }            
+        }
+
         public void ZFCore_AsociarUsuarioCompania(string UserId, string Codigo)
         {
             DbConnection connection = null;            

@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "SendConfirmation";
+    Layout = "~/Views/Shared/_LayoutPageSendMail.cshtml";}
+
+@using (Ajax.BeginForm("SendConfirmationHttp", "Security", new AjaxOptions() { HttpMethod = "POST", OnSuccess = "onTestComplete", OnFailure = "onTestFailure", OnBegin = "OnValidate" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group form-md-line-input">
+        <input type="text" class="form-control" id="txtEmail" name="txtEmail" placeholder="Ingrese su correo">
+        <label for="form_control_1">Correo</label>
+    </div>
+    <div class="form-group form-md-line-input">
+        <input type="text" class="form-control" id="txtUser" name="txtUser" placeholder="Ingrese el usuario">
+        <label for="form_control_1">Usuario</label>
+    </div>
+    <div class="form-actions noborder">
+        <button type="submit" class="btn blue">Enviar</button>
+    </div>
+    <div class="col-sm-12 col-sm-offset-3">
+        <p class="text-danger"></p>
+    </div>
+    <div class="col-sm-12 col-sm-offset-3">
+        <p class="text-success"></p>
+    </div>
+}
+<script>
+
+    function onTestFailure(xhr, status, error) {
+        console.log("Entro en error");
+        console.log("Mensaje", "error");
+        console.log("xhr", xhr);
+        console.log("status", status);
+  
+    }
+
+    function onTestComplete(data, status, xhr) {
+        console.log("Entro en ok");
+        console.log("Mensaje", "ok");
+        console.log("data", data.Mensaje);
+        console.log("data", data.Autorizado);
+        console.log("status", status);
+        console.log("xhr", xhr);
+        var Autorizado = "@ViewBag.Autorizado";
+        var Mensaje = "@ViewBag.Mensaje";
+
+        if (Autorizado == true)        
+            document.querySelector("p.text-success").textContent = Mensaje;        
+        else
+            document.querySelector("p.text-danger").textContent = Mensaje;
+
+    }
+
+    function OnValidate() {        
+
+        var txtUser = document.getElementById("txtUser");
+        var txtEmail = document.getElementById("txtEmail");
+        
+
+        if (txtEmail.value == "") {
+            document.querySelector("p.text-danger").textContent = "El email es obligatorio";
+            txtEmail.focus();
+            return false;
+        }
+
+        if (txtUser.value == "") {
+            document.querySelector("p.text-danger").textContent = "El usuario es obligatorio";
+            txtUser.focus();
+            return false;
+        }
+        
+
+        return true;
+    }
+</script>

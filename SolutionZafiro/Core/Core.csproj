@@ -796,6 +796,8 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\Web.config" />
+    <Content Include="Views\Security\SendConfirmation.cshtml" />
+    <Content Include="Views\Shared\_LayoutPageSendMail.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
